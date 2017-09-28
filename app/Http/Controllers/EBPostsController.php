@@ -88,9 +88,9 @@ class EBPostsController extends Controller
      */
     public function edit($id)
     {
-        $config['record'] = EBPosts::find($id);
+        $config = EBPosts::find($id);
 
-        return view('user.post-edit', $config);
+        return view('user.post-form', $config);
     }
 
     /**
@@ -102,15 +102,20 @@ class EBPostsController extends Controller
      */
     public function update($id)
     {
-        $config = EBPosts::find($id);
         $data = request()->all();
 
-        $config->update([
+        $config = EBPosts::find($id);
+
+        $config->update($data);
+
+        return redirect()->route('app.posts.index');
+
+/*        $config->update([
             'post_title' => $data['post_title'],
             'post_text' => $data['post_text'],
             'image' => $data['image']
 
-        ]);
+        ]);*/
     }
 
 
