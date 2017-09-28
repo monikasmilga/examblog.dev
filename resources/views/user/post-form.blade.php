@@ -16,9 +16,9 @@
 
             <div class="form-group">
                 <label for="post_text">Post content</label>
-                <textarea draggable="" class="form-control" id="post_text" rows="3" aria-describedby="textHelp"
+                <textarea style="resize:none" class="form-control" id="post_text" rows="3" aria-describedby="textHelp"
                           placeholder="Enter text" name="post_text"></textarea>
-                <small id="textHelp" class="form-text text-muted">Tell us more about the content of your post</small>
+                <small id="textHelp" class="form-text text-muted">Tell us more about your post</small>
             </div>
 
             <div class="form-group">

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -36,16 +37,20 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp; @if (Auth::user())
-                        <a class="navbar-brand" href="{{ route ('app.posts.create') }}">
+                @if (Auth::user())
+                    <ul class="nav navbar-nav">
+                        <a class="navbar-brand" href="{{ route ('app.post.create') }}">
                             Add post
                         </a>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <a class="navbar-brand" href="{{ route ('app.posts.index') }}">
+                            My posts
+                        </a>
+                    </ul>
+            @endif
 
-                    @endif
-                </ul>
-
-                <!-- Right Side Of Navbar -->
+            <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())

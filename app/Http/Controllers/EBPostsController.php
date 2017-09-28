@@ -1,6 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\EBPosts;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Ramsey\Uuid\Uuid;
 
 class EBPostsController extends Controller {
 
@@ -12,7 +17,10 @@ class EBPostsController extends Controller {
 	 */
 	public function index()
 	{
-		// all posts seen to the user
+		$config['list'] = EBPosts::get()->toArray();
+        $config['show'] = 'app.posts.show';
+
+        return view ('home', $config);
 	}
 
 	/**
@@ -32,10 +40,27 @@ class EBPostsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
-	}
+        if ($request->hasFile('image')){
+            $image = Input::file('image');
+            $filename = time().'.'. $image->getClientOriginalExtension();
+            //image resizer before move
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $filename);
+        }
+
+        EBPosts::create([
+            'id' => Uuid::uuid4(),
+            'user_id' => Auth::user()->id,
+            'post_title' => $request->post_title,
+            'post_url' => $request->post_url,
+            'post_text' => $request->post_text,
+            'image' => $filename,
+        ]);
+
+        return back();
+    }
 
 	/**
 	 * Display the specified resource.
@@ -46,7 +71,9 @@ class EBPostsController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$data = EBPosts::find($id)->toArray();
+
+		return view('post', $data);
 	}
 
 	/**
