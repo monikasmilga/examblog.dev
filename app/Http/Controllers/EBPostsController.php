@@ -12,7 +12,7 @@ class EBPostsController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		// all posts seen to the user
 	}
 
 	/**
@@ -23,7 +23,7 @@ class EBPostsController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view ('user.post-form');
 	}
 
 	/**
