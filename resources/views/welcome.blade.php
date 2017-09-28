@@ -7,7 +7,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
+                        <h1>Welcome to the blog</h1>
                     @else
                         <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
@@ -17,16 +17,49 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    All blog posts will be here
+
+                    @if(isset($list))
+                        @foreach($list as $item)
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">  {{ $item['post_title'] }}</div>
+
+                                    <div class="panel-body">
+
+
+                                        <div> {{ $item['post_text'] }} </div>
+                                        <div><img src="/images/{{ $item['image'] }}" class="img-icon"></div>
+                                        <br>
+
+
+                                        {{--@if(isset($show) )--}}
+
+                                            {{--<a href="{{route($show,$item['id'])}}">--}}
+                                                {{--<button class="btn btn-default"><span--}}
+                                                            {{--class="glyphicon glyphicon-eye-open"></span>--}}
+                                                {{--</button>--}}
+                                            {{--</a>--}}
+                                            {{--<a href="{{route($edit,$item['id'])}}">--}}
+                                                {{--<button class="btn btn-default"><span--}}
+                                                            {{--class="glyphicon glyphicon-edit"></span>--}}
+                                                {{--</button>--}}
+                                            {{--</a>--}}
+                                            {{--<a class="btn btn-default" onclick="return confirm('Are you sure?')"--}}
+                                               {{--href="{{route('app.posts.destroy', $item['id'])}}"><span--}}
+                                                        {{--class="glyphicon glyphicon-trash"></span>--}}
+                                            {{--</a>--}}
+
+                                        {{--@endif--}}
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
             </div>
         </div>
     </div>

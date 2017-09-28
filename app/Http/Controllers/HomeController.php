@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EBPosts;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $config['list'] = EBPosts::get()->toArray();
+        $config['show'] = 'app.posts.show';
+        $config['edit'] = 'app.posts.edit';
+        $config['delete'] = 'app.posts.destroy';
+
+        return view ('welcome', $config);
+
     }
 }

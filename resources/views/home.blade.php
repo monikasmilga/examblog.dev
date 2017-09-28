@@ -3,41 +3,72 @@
 @section('content')
     <div class="container">
         <div class="row">
-
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
-
-                    <div class="panel-body">
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        All posts will be here for the user personally
-                    </div>
-                </div>
-            </div>
-
             @foreach($list as $item)
-                <div class="col-md-2">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">  {{ $item['post_title'] }}</div>
 
-                    {{ $item['post_title'] }}
-                    {{ $item['post_text'] }}
-                    <img src="/images/{{ $item['image'] }}" class="img-icon">
-                    @if(isset($show) )
-                        <a href="{{route($show,$item['id'])}}">
-                            <button class="btn btn-default">Read</button>
-                        </a>
-                    @endif
+                        <div class="panel-body">
+                            {{--@if (session('status'))--}}
+                            {{--<div class="alert alert-success">--}}
+                            {{--{{ session('status') }}--}}
+                            {{--</div>--}}
+                            {{--@endif--}}
+
+
+                            <div> {{ $item['post_text'] }} </div>
+                            <div><img src="/images/{{ $item['image'] }}" class="img-icon"></div>
+                            <br>
+
+
+                            @if(isset($show) )
+
+                                <a href="{{route($show,$item['id'])}}">
+                                    <button class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </a>
+                                <a href="{{route($edit,$item['id'])}}">
+                                    <button class="btn btn-default"><span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </a>
+                                <a class="btn btn-default" onclick="return confirm('Are you sure?')"
+                                   href="{{route('app.posts.destroy', $item['id'])}}"><span
+                                            class="glyphicon glyphicon-trash"></span>
+                                </a>
+
+                            @endif
+
+
+                        </div>
+                    </div>
                 </div>
             @endforeach
 
-            {{--<img src="/images/1506587993.gif">--}}
-            {{--<div class="col-md-2">--}}
-            {{--{{ $item['post_title'] }}--}}
-            {{--</div>--}}
+
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        function deleteItem(route) {
+            $.ajax({
+                url: route,
+                type: 'DELETE',
+                data: {},
+                dataType: 'json',
+                success: function (response) {
+                    $('#' + response.id).remove();
+                },
+                error: function () {
+                    alert('Error');
+                }
+            });
+        }
+    </script>
 @endsection
