@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    All posts will be here for the user personally
                 </div>
             </div>
         </div>
